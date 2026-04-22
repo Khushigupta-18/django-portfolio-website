@@ -1,0 +1,128 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-shield-halved"></i>
+                <span>Admin</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'dashboard' %}" class="nav-item active">
+                <i class="fas fa-gauge-high"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{% url 'dashboard_projects' %}" class="nav-item">
+                <i class="fas fa-briefcase"></i>
+                <span>Projects</span>
+            </a>
+            <a href="{% url 'dashboard_skills' %}" class="nav-item">
+                <i class="fas fa-code"></i>
+                <span>Skills</span>
+            </a>
+            <a href="{% url 'dashboard_services' %}" class="nav-item">
+                <i class="fas fa-layer-group"></i>
+                <span>Services</span>
+            </a>
+            <a href="{% url 'dashboard_messages' %}" class="nav-item">
+                <i class="fas fa-envelope"></i>
+                <span>Messages</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="{% url 'admin_logout' %}" class="nav-item logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="content-header">
+            <h1 class="page-title">Dashboard Overview</h1>
+            <p class="page-subtitle">Welcome back! Here's what's happening with your portfolio.</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon projects">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value">{{ project_count }}</span>
+                    <span class="stat-label">Total Projects</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon messages">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value">{{ message_count }}</span>
+                    <span class="stat-label">Messages</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon skills">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value">{{ skill_count }}</span>
+                    <span class="stat-label">Skills</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon services">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="stat-content">
+                    <span class="stat-value">{{ service_count }}</span>
+                    <span class="stat-label">Services</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="section-header">
+                <h2 class="section-title">Recent Messages</h2>
+                <a href="{% url 'dashboard_messages' %}" class="btn btn-sm">View All</a>
+            </div>
+            <div class="messages-list">
+                {% for message in recent_messages %}
+                <div class="message-item">
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-name">{{ message.name }}</span>
+                            <span class="message-date">{{ message.created_at|date:"M d, Y" }}</span>
+                        </div>
+                        <p class="message-subject">{{ message.subject }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>No messages yet</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.querySelector('.dashboard-layout').classList.toggle('sidebar-collapsed');
+    });
+</script>
+{% endblock %}

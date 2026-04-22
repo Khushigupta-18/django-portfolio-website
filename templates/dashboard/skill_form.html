@@ -1,0 +1,96 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}{% if skill %}Edit Skill{% else %}Add Skill{% endif %}{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-shield-halved"></i>
+                <span>Admin</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'dashboard' %}" class="nav-item">
+                <i class="fas fa-gauge-high"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{% url 'dashboard_projects' %}" class="nav-item">
+                <i class="fas fa-briefcase"></i>
+                <span>Projects</span>
+            </a>
+            <a href="{% url 'dashboard_skills' %}" class="nav-item active">
+                <i class="fas fa-code"></i>
+                <span>Skills</span>
+            </a>
+            <a href="{% url 'dashboard_services' %}" class="nav-item">
+                <i class="fas fa-layer-group"></i>
+                <span>Services</span>
+            </a>
+            <a href="{% url 'dashboard_messages' %}" class="nav-item">
+                <i class="fas fa-envelope"></i>
+                <span>Messages</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="{% url 'admin_logout' %}" class="nav-item logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="content-header">
+            <div class="header-content">
+                <h1 class="page-title">{% if skill %}Edit Skill{% else %}Add Skill{% endif %}</h1>
+            </div>
+        </header>
+
+        <div class="form-wrapper">
+            <form method="POST" class="admin-form">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Skill Name</label>
+                        <input type="text" name="name" class="form-input" value="{{ skill.name|default:'' }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Percentage (0-100)</label>
+                        <input type="number" name="percentage" class="form-input" value="{{ skill.percentage|default:'0' }}" min="0" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select name="category" class="form-input" required>
+                            <option value="frontend" {% if skill.category == 'frontend' %}selected{% endif %}>Frontend</option>
+                            <option value="backend" {% if skill.category == 'backend' %}selected{% endif %}>Backend</option>
+                            <option value="tools" {% if skill.category == 'tools' %}selected{% endif %}>Tools</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Order</label>
+                        <input type="number" name="order" class="form-input" value="{{ skill.order|default:'0' }}">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a href="{% url 'dashboard_skills' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        <span>{% if skill %}Update{% else %}Create{% endif %} Skill</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.querySelector('.dashboard-layout').classList.toggle('sidebar-collapsed');
+    });
+</script>
+{% endblock %}

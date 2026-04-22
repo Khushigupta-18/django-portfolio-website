@@ -1,0 +1,62 @@
+<section class="services" id="services">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Services</span>
+            <h2 class="section-title">What I Can Do For You</h2>
+            <p class="section-subtitle">Delivering excellence in every project</p>
+        </div>
+        <div class="services-grid">
+            {% for service in services %}
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-{{ service.icon }}"></i>
+                </div>
+                <h3 class="service-title">{{ service.title }}</h3>
+                <p class="service-description">{{ service.description }}</p>
+                <div class="service-features">
+                    <span class="feature-item"><i class="fas fa-check"></i> Custom Development</span>
+                    <span class="feature-item"><i class="fas fa-check"></i> Clean Code</span>
+                    <span class="feature-item"><i class="fas fa-check"></i> Best Practices</span>
+                </div>
+            </div>
+            {% empty %}
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="service-title">Web Development</h3>
+                <p class="service-description">Custom web applications built with Django, tailored to your specific needs with clean, maintainable code.</p>
+                <div class="service-features">
+                    <span class="feature-item"><i class="fas fa-check"></i> Full-Stack Solutions</span>
+                    <span class="feature-item"><i class="fas fa-check"></i> RESTful APIs</span>
+                    <span class="feature-item"><i class="fas fa-check"></i> Responsive Design</span>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-server"></i>
+                </div>
+                <h3 class="service-title">Backend Development</h3>
+                <p class="service-description">Robust API development, database design, and server-side architecture for scalable applications.</p>
+                <div class="service-features">
+                    <span class="feature-item"><i class="fas fa-check"></i> Database Optimization</span>
+                    <span class="feature-item"><i class="fas fa-check"></i> Security</span>
+                    <span class="feature-item"><i class="fas fa-check"></i> Scalability</span>
+                </div>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3 class="service-title">Performance Optimization</h3>
+                <p class="service-description">Speed up your existing application with caching, query optimization, and best practices.</p>
+                <div class="service-features">
+                    <span class="feature-item"><i class="fas fa-check"></i> Speed Optimization</span>
+                    <span class="feature-item"><i class="fas fa-check"></i> Caching</span>
+                    <span class="feature-item"><i class="fas fa-check"></i> Monitoring</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

@@ -1,0 +1,92 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}{% if service %}Edit Service{% else %}Add Service{% endif %}{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-shield-halved"></i>
+                <span>Admin</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'dashboard' %}" class="nav-item">
+                <i class="fas fa-gauge-high"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{% url 'dashboard_projects' %}" class="nav-item">
+                <i class="fas fa-briefcase"></i>
+                <span>Projects</span>
+            </a>
+            <a href="{% url 'dashboard_skills' %}" class="nav-item">
+                <i class="fas fa-code"></i>
+                <span>Skills</span>
+            </a>
+            <a href="{% url 'dashboard_services' %}" class="nav-item active">
+                <i class="fas fa-layer-group"></i>
+                <span>Services</span>
+            </a>
+            <a href="{% url 'dashboard_messages' %}" class="nav-item">
+                <i class="fas fa-envelope"></i>
+                <span>Messages</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="{% url 'admin_logout' %}" class="nav-item logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="content-header">
+            <div class="header-content">
+                <h1 class="page-title">{% if service %}Edit Service{% else %}Add Service{% endif %}</h1>
+            </div>
+        </header>
+
+        <div class="form-wrapper">
+            <form method="POST" class="admin-form">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="title" class="form-input" value="{{ service.title|default:'' }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Icon (Font Awesome class)</label>
+                        <input type="text" name="icon" class="form-input" value="{{ service.icon|default:'fa-code' }}" placeholder="fa-code">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Order</label>
+                        <input type="number" name="order" class="form-input" value="{{ service.order|default:'0' }}">
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" rows="4" class="form-input" required>{{ service.description|default:'' }}</textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a href="{% url 'dashboard_services' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        <span>{% if service %}Update{% else %}Create{% endif %} Service</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.querySelector('.dashboard-layout').classList.toggle('sidebar-collapsed');
+    });
+</script>
+{% endblock %}

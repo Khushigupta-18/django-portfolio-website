@@ -1,0 +1,102 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}Manage Services{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-shield-halved"></i>
+                <span>Admin</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'dashboard' %}" class="nav-item">
+                <i class="fas fa-gauge-high"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{% url 'dashboard_projects' %}" class="nav-item">
+                <i class="fas fa-briefcase"></i>
+                <span>Projects</span>
+            </a>
+            <a href="{% url 'dashboard_skills' %}" class="nav-item">
+                <i class="fas fa-code"></i>
+                <span>Skills</span>
+            </a>
+            <a href="{% url 'dashboard_services' %}" class="nav-item active">
+                <i class="fas fa-layer-group"></i>
+                <span>Services</span>
+            </a>
+            <a href="{% url 'dashboard_messages' %}" class="nav-item">
+                <i class="fas fa-envelope"></i>
+                <span>Messages</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="{% url 'admin_logout' %}" class="nav-item logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="content-header">
+            <div class="header-content">
+                <h1 class="page-title">Manage Services</h1>
+                <p class="page-subtitle">Add and manage your service offerings</p>
+            </div>
+            <a href="{% url 'service_add' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                <span>Add Service</span>
+            </a>
+        </header>
+
+        {% if messages %}
+        <div class="alert-messages">
+            {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="services-grid">
+            {% for service in services %}
+            <div class="service-card-admin">
+                <div class="service-icon-admin">
+                    <i class="fas fa-{{ service.icon }}"></i>
+                </div>
+                <h3 class="service-title">{{ service.title }}</h3>
+                <p class="service-description">{{ service.description }}</p>
+                <div class="service-actions">
+                    <a href="{% url 'service_edit' service.pk %}" class="btn btn-icon btn-edit">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a href="{% url 'service_delete' service.pk %}" class="btn btn-icon btn-delete" onclick="return confirm('Are you sure?')">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-full">
+                <div class="empty-state">
+                    <i class="fas fa-layer-group"></i>
+                    <p>No services yet. Add your first service!</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</div>
+
+<script>
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.querySelector('.dashboard-layout').classList.toggle('sidebar-collapsed');
+    });
+</script>
+{% endblock %}

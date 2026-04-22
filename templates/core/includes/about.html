@@ -1,0 +1,94 @@
+<section class="about" id="about">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">About Me</span>
+            <h2 class="section-title">Building Digital Excellence</h2>
+            <p class="section-subtitle">Passionate about creating impactful web solutions</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-image-card">
+                <div class="image-main">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=600&fit=crop&crop=face" alt="Vansh Goel">
+                </div>
+                <div class="image-accent"></div>
+                <div class="experience-badge">
+                    <span class="exp-number">5+</span>
+                    <span class="exp-text">Years of<br>Experience</span>
+                </div>
+            </div>
+            <div class="about-content">
+                <h3 class="about-heading">Full-Stack Developer specializing in Django & Modern Web Technologies</h3>
+                <p class="about-text">
+                    I'm Vansh Goel, a dedicated Django developer with extensive experience in building robust, 
+                    scalable web applications. My journey started with a fascination for creating 
+                    efficient solutions, and today I help businesses transform their ideas into 
+                    powerful digital products.
+                </p>
+                <p class="about-text">
+                    I believe in writing clean, maintainable code and creating intuitive user 
+                    experiences. Every project is an opportunity to learn and deliver exceptional results.
+                </p>
+                <div class="skills-container">
+                    {% for skill in skills %}
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">{{ skill.name }}</span>
+                            <span class="skill-percentage">{{ skill.percentage }}%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-progress="{{ skill.percentage }}"></div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Django</span>
+                            <span class="skill-percentage">95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-progress="95"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Python</span>
+                            <span class="skill-percentage">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-progress="90"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">JavaScript</span>
+                            <span class="skill-percentage">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-progress="85"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">PostgreSQL</span>
+                            <span class="skill-percentage">88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-progress="88"></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="about-buttons">
+                    <a href="#contact" class="btn btn-primary">
+                        <span>Let's Talk</span>
+                        <i class="fas fa-comments"></i>
+                    </a>
+                    <a href="#projects" class="btn btn-secondary">
+                        <span>View Projects</span>
+                        <i class="fas fa-briefcase"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,108 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block title %}{% if project %}Edit Project{% else %}Add Project{% endif %}{% endblock %}
+
+{% block content %}
+<div class="dashboard-layout">
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <i class="fas fa-shield-halved"></i>
+                <span>Admin</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'dashboard' %}" class="nav-item">
+                <i class="fas fa-gauge-high"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="{% url 'dashboard_projects' %}" class="nav-item active">
+                <i class="fas fa-briefcase"></i>
+                <span>Projects</span>
+            </a>
+            <a href="{% url 'dashboard_skills' %}" class="nav-item">
+                <i class="fas fa-code"></i>
+                <span>Skills</span>
+            </a>
+            <a href="{% url 'dashboard_services' %}" class="nav-item">
+                <i class="fas fa-layer-group"></i>
+                <span>Services</span>
+            </a>
+            <a href="{% url 'dashboard_messages' %}" class="nav-item">
+                <i class="fas fa-envelope"></i>
+                <span>Messages</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="{% url 'admin_logout' %}" class="nav-item logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="content-header">
+            <div class="header-content">
+                <h1 class="page-title">{% if project %}Edit Project{% else %}Add Project{% endif %}</h1>
+                <p class="page-subtitle">{% if project %}Update project details{% else %}Add a new project to your portfolio{% endif %}</p>
+            </div>
+        </header>
+
+        <div class="form-wrapper">
+            <form method="POST" enctype="multipart/form-data" class="admin-form">
+                {% csrf_token %}
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Title</label>
+                        <input type="text" name="title" class="form-input" value="{{ project.title|default:'' }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Order</label>
+                        <input type="number" name="order" class="form-input" value="{{ project.order|default:'0' }}">
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Description</label>
+                        <textarea name="description" rows="4" class="form-input" required>{{ project.description|default:'' }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tech Stack (comma-separated)</label>
+                        <input type="text" name="tech_stack" class="form-input" value="{{ project.tech_stack|default:'' }}" placeholder="Django, React, PostgreSQL">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Image</label>
+                        <input type="file" name="image" class="form-input" accept="image/*">
+                        {% if project and project.image %}
+                        <p class="form-help">Current: {{ project.image.name }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">GitHub Link</label>
+                        <input type="url" name="github_link" class="form-input" value="{{ project.github_link|default:'' }}" placeholder="https://github.com/...">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Live Demo Link</label>
+                        <input type="url" name="live_link" class="form-input" value="{{ project.live_link|default:'' }}" placeholder="https://...">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <a href="{% url 'dashboard_projects' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        <span>{% if project %}Update{% else %}Create{% endif %} Project</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.getElementById('sidebarToggle').addEventListener('click', function() {
+        document.querySelector('.dashboard-layout').classList.toggle('sidebar-collapsed');
+    });
+</script>
+{% endblock %}
